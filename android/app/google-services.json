@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "910173507562",
+    "project_id": "constructeye",
+    "storage_bucket": "constructeye.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910173507562:android:7036282837cc5243772c93",
+        "android_client_info": {
+          "package_name": "com.example.constructeye"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASUdJhiu1hn8WoTisMHSSGGk8B4HOwPWs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
