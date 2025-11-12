@@ -1,39 +1,36 @@
 import 'package:flutter/material.dart';
+import '../../core/colors/AppColors.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  final Color textColor;
-  final Color buttonColor;
   final VoidCallback? onPressed;
 
   const CustomButton({
     super.key,
     required this.text,
-    required this.textColor,
-    required this.buttonColor,
     this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return GestureDetector(
       onTap: onPressed,
       child: Container(
         width: double.infinity,
-        height: 50, // Fixed height
+        height: 50,
         decoration: BoxDecoration(
-          color: buttonColor,
+          color: theme.colorScheme.primary, // from Theme
           borderRadius: BorderRadius.circular(15),
         ),
-        alignment: Alignment.center, // Centers the text perfectly
+        alignment: Alignment.center,
         child: Text(
           text,
           style: TextStyle(
-            color: textColor,
-            fontSize: 16,
+            color: AppColors.secondaryColor,
             fontWeight: FontWeight.bold,
           ),
-          textAlign: TextAlign.center, // just in case
         ),
       ),
     );

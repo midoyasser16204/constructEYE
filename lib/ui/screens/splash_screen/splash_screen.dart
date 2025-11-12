@@ -30,11 +30,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: StreamBuilder<SplashState>(
         stream: _bloc.state,
         initialData: SplashState(),
@@ -63,9 +64,13 @@ class _SplashScreenState extends State<SplashScreen> {
                       height: screenWidth * 0.6,
                     ),
                     SizedBox(height: screenHeight * 0.03),
-                    const Text(
+                    Text(
                       AppConstants.appTagLine,
-                      style: TextStyle(fontSize: 16, color: AppColors.text),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontSize: 16,
+                        color: theme.textTheme.bodyMedium?.color, // automatically adapts to theme
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),

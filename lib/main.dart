@@ -2,6 +2,8 @@ import 'package:constructEYE/core/constants/AppConstants.dart';
 import 'package:constructEYE/ui/screens/login_screen/login_screen.dart';
 import 'package:constructEYE/ui/screens/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'core/themes/AppThemes.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'core/configures/firebase_options.dart';
@@ -22,6 +24,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: AppConstants.appName,
+      theme: AppThemes.lightTheme,
+      darkTheme: AppThemes.darkTheme,
+      themeMode: ThemeMode.dark,
       initialRoute: AppConstants.splashScreenRoute,
       routes: {
         AppConstants.splashScreenRoute: (context) => const SplashScreen(),

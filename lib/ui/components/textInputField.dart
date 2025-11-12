@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../core/colors/AppColors.dart';
 
 class TextInputField extends StatefulWidget {
   final String title;
@@ -9,7 +8,7 @@ class TextInputField extends StatefulWidget {
   final bool isPassword;
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
-  final String? errorText; // 🔹 Error message
+  final String? errorText;
 
   const TextInputField({
     super.key,
@@ -37,12 +36,14 @@ class _TextInputFieldState extends State<TextInputField> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           widget.title,
-          style: const TextStyle(fontSize: 14, color: AppColors.text),
+          style: theme.textTheme.bodyMedium,
         ),
         const SizedBox(height: 4),
         TextField(
@@ -51,16 +52,13 @@ class _TextInputFieldState extends State<TextInputField> {
           onChanged: widget.onChanged,
           decoration: InputDecoration(
             hintText: widget.hintText,
+            hintStyle: TextStyle(
+              color: theme.hintColor,
+            ),
             filled: true,
-            fillColor: AppColors.inputFieldBackground,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(color: AppColors.inputFieldBackground),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(color: AppColors.inputFieldBackground),
-            ),
+            fillColor: theme.inputDecorationTheme.fillColor,
+            enabledBorder: theme.inputDecorationTheme.enabledBorder,
+            focusedBorder: theme.inputDecorationTheme.focusedBorder,
             prefixIcon: widget.svgPrefixIcon != null
                 ? Padding(
               padding: const EdgeInsets.all(12.0),
