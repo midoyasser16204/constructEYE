@@ -55,10 +55,28 @@ class AppConstants {
   static const String themeContainerDarkIcon = 'assets/icons/theme_container_dark_ico.svg';
   static const String uploadImageContainerDarkIcon = 'assets/icons/upload_image_container_dark_ico.svg';
   static const String waveContainerDarkIcon = 'assets/icons/wave_container_dark_ico.svg';
+  static const String backgroundIcon = 'assets/icons/background.svg';
+
 
   // -----------------------------
   // 🖼️ Images
   // -----------------------------
-  static const String backgroundImage = 'assets/images/background.png';
   static const String logoImage = 'assets/images/logo.png';
+
+  // -----------------------------
+  // Strings
+  // -----------------------------
+  static const String appName = 'ConstructEYE';
+  static const String appTagLine = 'AI-Powered Site Monitoring';
+  static const String welcomeBack = 'Welcome Back';
+  static const String signInMonitor = 'Sign in to monitor your construction sites';
+  static const String email = 'Email';
+  static const String emailPlaceholder = 'Enter your email';
+  static const String password = 'Password';
+  static const String passwordPlaceholder = 'Enter your password';
+  static const String forgetPassword = 'Forgot Password?';
+  static const String login = 'Login';
+  static const String dontHaveAccount = "Don't have an account? ";
+  static const String signUp = 'Sign Up';
+  static const String pleaseWait = 'Please wait...';
 }
