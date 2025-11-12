@@ -22,7 +22,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: AppConstants.appName,
-      home: const LoginScreen(),
+      initialRoute: AppConstants.splashScreenRoute,
+      routes: {
+        AppConstants.splashScreenRoute: (context) => const SplashScreen(),
+        AppConstants.loginScreenRoute: (context) => const LoginScreen(),
+      },
     );
   }
 }

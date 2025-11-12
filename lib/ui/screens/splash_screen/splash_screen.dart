@@ -1,30 +1,54 @@
-import 'package:constructEYE/core/colors/AppColors.dart';
-import 'package:constructEYE/core/constants/AppConstants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import '../../../core/colors/AppColors.dart';
+import '../../../core/constants/AppConstants.dart';
 import 'splash_bloc/splash_bloc.dart';
 import 'splash_bloc/splash_contract.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  late final SplashBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = SplashBloc();
+    _bloc.eventSink.add(SplashStarted());
+  }
+
+  @override
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
-    return BlocProvider(
-      create: (_) => SplashBloc()..add(SplashStarted()),
-      child: BlocListener<SplashBloc, SplashUiState>(
-        listener: (context, state) {
-          if (state is SplashFinished) {
-            Navigator.pushReplacementNamed(context, '/login');
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: StreamBuilder<SplashState>(
+        stream: _bloc.state,
+        initialData: SplashState(),
+        builder: (context, snapshot) {
+          final state = snapshot.data!;
+
+          // Navigate when finished
+          if (state.isFinished) {
+            Future.microtask(() {
+              Navigator.pushReplacementNamed(context,AppConstants.loginScreenRoute);
+            });
           }
-        },
-        child: Scaffold(
-          backgroundColor: AppColors.background,
-          body: Column(
+
+          return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(height: screenHeight * 0.05),
@@ -35,16 +59,13 @@ class SplashScreen extends StatelessWidget {
                   children: [
                     Image.asset(
                       AppConstants.logoImage,
-                      width: screenHeight * 0.3,
-                      height: screenWidth * 0.3,
+                      width: screenHeight * 0.6,
+                      height: screenWidth * 0.6,
                     ),
                     SizedBox(height: screenHeight * 0.03),
                     const Text(
                       AppConstants.appTagLine,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: AppColors.text,
-                      ),
+                      style: TextStyle(fontSize: 16, color: AppColors.text),
                     ),
                   ],
                 ),
@@ -52,14 +73,16 @@ class SplashScreen extends StatelessWidget {
 
               Padding(
                 padding: EdgeInsets.only(bottom: screenHeight * 0.06),
-                child: LoadingAnimationWidget.waveDots(
-                  color: AppColors.secondaryColor,
-                  size: screenHeight * 0.045,
-                ),
+                child: state.isLoading
+                    ? LoadingAnimationWidget.waveDots(
+                        color: AppColors.secondaryColor,
+                        size: screenHeight * 0.045,
+                      )
+                    : const SizedBox.shrink(),
               ),
             ],
-          ),
-        ),
+          );
+        },
       ),
     );
   }

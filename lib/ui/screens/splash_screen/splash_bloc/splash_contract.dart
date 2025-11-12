@@ -1,35 +1,30 @@
-/// This file defines the Splash “contract” — Events (Intents) and UI States
+/// --------------------------
+/// 🔹 Splash Events
+/// --------------------------
+abstract class SplashEvent {}
 
-import 'package:equatable/equatable.dart';
+/// Triggered when splash screen starts
+class SplashStarted extends SplashEvent {}
 
-/// ----------------------
-/// 1️⃣ Intents (Events)
-/// ----------------------
-abstract class SplashIntent extends Equatable {
-  const SplashIntent();
+/// --------------------------
+/// 🔹 Splash State
+/// --------------------------
+class SplashState {
+  final bool isLoading;
+  final bool isFinished;
 
-  @override
-  List<Object> get props => [];
+  SplashState({
+    this.isLoading = false,
+    this.isFinished = false,
+  });
+
+  SplashState copyWith({
+    bool? isLoading,
+    bool? isFinished,
+  }) {
+    return SplashState(
+      isLoading: isLoading ?? this.isLoading,
+      isFinished: isFinished ?? this.isFinished,
+    );
+  }
 }
-
-/// Triggered when Splash starts
-class SplashStarted extends SplashIntent {}
-
-/// ----------------------
-/// 2️⃣ UI States
-/// ----------------------
-abstract class SplashUiState extends Equatable {
-  const SplashUiState();
-
-  @override
-  List<Object> get props => [];
-}
-
-/// Initial state
-class SplashInitial extends SplashUiState {}
-
-/// Loading / waiting state
-class SplashLoading extends SplashUiState {}
-
-/// Finished state — ready to navigate
-class SplashFinished extends SplashUiState {}

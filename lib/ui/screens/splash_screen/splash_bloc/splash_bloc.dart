@@ -1,24 +1,36 @@
 import 'dart:async';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'splash_contract.dart';
 
-/// ----------------------
-/// SplashBloc (MVI)
-/// ----------------------
-class SplashBloc extends Bloc<SplashIntent, SplashUiState> {
-  SplashBloc() : super(SplashInitial()) {
-    on<SplashStarted>(_onStarted);
+class SplashBloc {
+  /// --------------------------
+  /// Streams
+  /// --------------------------
+  final _stateController = StreamController<SplashState>.broadcast();
+  Stream<SplashState> get state => _stateController.stream;
+  SplashState _currentState = SplashState();
+
+  final _eventController = StreamController<SplashEvent>();
+  Sink<SplashEvent> get eventSink => _eventController.sink;
+
+  SplashBloc() {
+    _eventController.stream.listen(_mapEventToState);
   }
 
-  /// Handle SplashStarted intent
-  Future<void> _onStarted(
-      SplashStarted event, Emitter<SplashUiState> emit) async {
-    emit(SplashLoading());
+  void _mapEventToState(SplashEvent event) async {
+    if (event is SplashStarted) {
+      _currentState = _currentState.copyWith(isLoading: true, isFinished: false);
+      _stateController.add(_currentState);
 
-    // Delay 3 seconds (simulate splash loading)
-    await Future.delayed(const Duration(seconds: 3));
+      // Simulate splash delay
+      await Future.delayed(const Duration(seconds: 3));
 
-    // Emit finished state
-    emit(SplashFinished());
+      _currentState = _currentState.copyWith(isLoading: false, isFinished: true);
+      _stateController.add(_currentState);
+    }
+  }
+
+  void dispose() {
+    _stateController.close();
+    _eventController.close();
   }
 }

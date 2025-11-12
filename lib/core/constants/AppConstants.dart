@@ -64,6 +64,12 @@ class AppConstants {
   static const String logoImage = 'assets/images/logo.png';
 
   // -----------------------------
+  // Routes
+  // -----------------------------
+  static const String splashScreenRoute = '/splash';
+  static const String loginScreenRoute = '/login';
+
+  // -----------------------------
   // Strings
   // -----------------------------
   static const String appName = 'ConstructEYE';
