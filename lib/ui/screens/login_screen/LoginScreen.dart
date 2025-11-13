@@ -1,9 +1,9 @@
 import 'package:constructEYE/core/constants/AppConstants.dart';
-import 'package:constructEYE/ui/components/customButton.dart';
-import 'package:constructEYE/ui/components/textInputField.dart';
+import 'package:constructEYE/ui/components/CustomButton.dart';
+import 'package:constructEYE/ui/components/TextInputField.dart';
 import 'package:flutter/material.dart';
-import 'login_bloc/login_bloc.dart';
-import 'login_bloc/login_contract.dart';
+import 'login_bloc/LoginBloc.dart';
+import 'login_bloc/LoginContract.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'splash_contract.dart';
+import 'SplashContract.dart';
 
 class SplashBloc {
   /// --------------------------

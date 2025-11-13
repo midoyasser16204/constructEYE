@@ -1,12 +1,12 @@
 import 'package:constructEYE/core/constants/AppConstants.dart';
-import 'package:constructEYE/ui/screens/login_screen/login_screen.dart';
-import 'package:constructEYE/ui/screens/splash_screen/splash_screen.dart';
+import 'package:constructEYE/ui/screens/login_screen/LoginScreen.dart';
+import 'package:constructEYE/ui/screens/splash_screen/SplashScreen.dart';
 import 'package:flutter/material.dart';
 
 import 'core/themes/AppThemes.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'core/configures/firebase_options.dart';
+// import 'core/configures/FirebaseOptions.dart';
 
 void main() { //async {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       title: AppConstants.appName,
       theme: AppThemes.lightTheme,
       darkTheme: AppThemes.darkTheme,
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       initialRoute: AppConstants.splashScreenRoute,
       routes: {
         AppConstants.splashScreenRoute: (context) => const SplashScreen(),

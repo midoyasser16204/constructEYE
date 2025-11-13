@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../core/colors/AppColors.dart';
 import '../../../core/constants/AppConstants.dart';
-import 'splash_bloc/splash_bloc.dart';
-import 'splash_bloc/splash_contract.dart';
+import 'splash_bloc/SplashBloc.dart';
+import 'splash_bloc/SplashContract.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
