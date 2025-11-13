@@ -43,6 +43,7 @@ class AppThemes {
       error: AppColors.errorColor,
     ),
     inputDecorationTheme: InputDecorationTheme(
+
       filled: true,
       fillColor: AppColors.inputFieldBackgroundDark,
       border: OutlineInputBorder(

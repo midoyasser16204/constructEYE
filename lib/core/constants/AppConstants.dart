@@ -19,6 +19,7 @@ class AppConstants {
   static const String saveIcon = 'assets/icons/save_ico.svg';
   static const String timeIcon = 'assets/icons/time_ico.svg';
   static const String whiteArrowBackIcon = 'assets/icons/white_arrow_back_ico.svg';
+  static const String loginSignupBackgroundIcon = 'assets/icons/login_signup_background.svg';
 
   // -----------------------------
   // 📦 Light Container Icons
@@ -62,12 +63,14 @@ class AppConstants {
   // 🖼️ Images
   // -----------------------------
   static const String logoImage = 'assets/images/logo.png';
+  static const String loginSignupBackgroundImage = 'assets/images/login_signup_background.png';
 
   // -----------------------------
   // Routes
   // -----------------------------
   static const String splashScreenRoute = '/splash';
   static const String loginScreenRoute = '/login';
+  static const String signupScreenRoute = '/signup';
 
   // -----------------------------
   // Strings
@@ -80,9 +83,16 @@ class AppConstants {
   static const String emailPlaceholder = 'Enter your email';
   static const String password = 'Password';
   static const String passwordPlaceholder = 'Enter your password';
+  static const String confirmPassword = 'Confirm Password';
+  static const String confirmPasswordPlaceholder = 'Reenter your password';
+  static const String name = 'Full Name';
+  static const String namePlaceholder = 'Enter your full name';
   static const String forgetPassword = 'Forgot Password?';
-  static const String login = 'Login';
   static const String dontHaveAccount = "Don't have an account? ";
   static const String signUp = 'Sign Up';
+  static const String alreadyHaveAccount = 'Already have an account? ';
+  static const String logIn = 'Log In';
   static const String pleaseWait = 'Please wait...';
+  static const String createAccount = 'Create Account';
+  static const String signUpMonitor = 'Join ConstructEYE to start monitoring';
 }

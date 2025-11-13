@@ -1,10 +1,12 @@
 import 'dart:async';
-import 'LoginContract.dart';
+import 'package:validators/validators.dart';
+
+import '../../../../domain/usecase/login_use_case/LoginUseCase.dart';
+import 'LogInContract.dart';
 
 class LoginBloc {
-  /// --------------------------
-  /// Streams
-  /// --------------------------
+  final LoginUseCase _loginUseCase;
+
   final _stateController = StreamController<LoginState>.broadcast();
   Stream<LoginState> get state => _stateController.stream;
   LoginState _currentState = LoginState();
@@ -12,7 +14,7 @@ class LoginBloc {
   final _eventController = StreamController<LoginEvent>();
   Sink<LoginEvent> get eventSink => _eventController.sink;
 
-  LoginBloc() {
+  LoginBloc(this._loginUseCase) {
     _eventController.stream.listen(_mapEventToState);
   }
 
@@ -20,20 +22,21 @@ class LoginBloc {
     if (event is EmailChanged) {
       _currentState = _currentState.copyWith(
         email: event.email,
-        emailError: event.email.contains('@') ? null : "Invalid email",
+        emailError: isEmail(event.email) ? null : "Invalid email format",
       );
       _stateController.add(_currentState);
     } else if (event is PasswordChanged) {
       _currentState = _currentState.copyWith(
         password: event.password,
-        passwordError: event.password.length >= 4 ? null : "Password too short",
+        passwordError: event.password.length >= 6 ? null : "Password too short",
       );
       _stateController.add(_currentState);
     } else if (event is LoginSubmitted) {
-      // Validate before submitting
+      // Validate inputs
       _currentState = _currentState.copyWith(
-        emailError: _currentState.isEmailValid ? null : "Invalid email",
-        passwordError: _currentState.isPasswordValid ? null : "Password too short",
+        emailError: isEmail(_currentState.email) ? null : "Invalid email format",
+        passwordError: _currentState.password.length >= 6 ? null : "Password too short",
+        generalError: null,
       );
       _stateController.add(_currentState);
 
@@ -42,27 +45,27 @@ class LoginBloc {
       _currentState = _currentState.copyWith(isSubmitting: true);
       _stateController.add(_currentState);
 
-      await Future.delayed(const Duration(seconds: 3));
+      try {
+        final user = await _loginUseCase.execute(
+          _currentState.email,
+          _currentState.password,
+        );
 
-      if (_currentState.email == "admin@admin.com" &&
-          _currentState.password == "1234") {
         _currentState = _currentState.copyWith(
           isSubmitting: false,
           isSuccess: true,
           generalError: null,
         );
-
-      } else {
+      } catch (e) {
         _currentState = _currentState.copyWith(
           isSubmitting: false,
           isSuccess: false,
-          generalError: "Invalid email or password",
+          generalError: e.toString(),
         );
       }
 
       _stateController.add(_currentState);
-    }
-    else if (event is ClearGeneralError) {
+    } else if (event is ClearGeneralError) {
       _currentState = _currentState.copyWith(generalError: null);
       _stateController.add(_currentState);
     }
