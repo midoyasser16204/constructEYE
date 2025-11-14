@@ -121,27 +121,35 @@ class _LoginScreenState extends State<LoginScreen> {
                         errorText: state.passwordError,
                       ),
                       SizedBox(height: screenHeight * 0.02),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          AppConstants.forgetPassword,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.primary,
-                            fontSize: 12,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            AppConstants.forgetPasswordScreenRoute,
+                          );
+                        },
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            AppConstants.forgetPassword,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: theme.colorScheme.primary,
+                              fontSize: 12,
+                            ),
                           ),
                         ),
                       ),
                       SizedBox(height: screenHeight * 0.03),
                       state.isSubmitting
                           ? CustomButton(
-                        text: AppConstants.pleaseWait,
-                        onPressed: null,
-                      )
+                              text: AppConstants.pleaseWait,
+                              onPressed: null,
+                            )
                           : CustomButton(
-                        text: AppConstants.logIn,
-                        onPressed: () =>
-                            _bloc.eventSink.add(LoginSubmitted()),
-                      ),
+                              text: AppConstants.logIn,
+                              onPressed: () =>
+                                  _bloc.eventSink.add(LoginSubmitted()),
+                            ),
                       SizedBox(height: screenHeight * 0.02),
                       GestureDetector(
                         onTap: () {
