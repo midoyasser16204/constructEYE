@@ -71,6 +71,7 @@ class AppConstants {
   static const String splashScreenRoute = '/splash';
   static const String loginScreenRoute = '/login';
   static const String signupScreenRoute = '/signup';
+  static const String editProfileScreenRoute = '/editProfile';
 
   // -----------------------------
   // Strings
@@ -80,6 +81,7 @@ class AppConstants {
   static const String welcomeBack = 'Welcome Back';
   static const String signInMonitor = 'Sign in to monitor your construction sites';
   static const String email = 'Email';
+  static const String emailAddress = 'Email Address';
   static const String emailPlaceholder = 'Enter your email';
   static const String password = 'Password';
   static const String passwordPlaceholder = 'Enter your password';
@@ -95,4 +97,16 @@ class AppConstants {
   static const String pleaseWait = 'Please wait...';
   static const String createAccount = 'Create Account';
   static const String signUpMonitor = 'Join ConstructEYE to start monitoring';
+  static const String editProfileName = 'JD';
+  static const String editProfileNameAll = 'John Doe';
+  static const String saveChange = 'Save Changes';
+  static const String editProfileTitle = 'Edit Profile';
+  static const String cancelButtonTitle = 'Cancel';
+  static const String changeProfilePicture = 'Tap to change photo';
+  static const String postion = 'Role / Position';
+  static const String phoneNumber = 'Phone Number';
+  static const String companyName = 'Company';
+  static const String defaultRole = "Site Manager";
+  static const String defaultEmail = "john.doe@constructeye.com";
+  static const String defaultPhone = "+1 (555) 123-4567";
 }
