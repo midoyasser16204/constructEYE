@@ -13,11 +13,11 @@ class EditProfileBloc {
   Stream<EditProfileState> get state => _stateController.stream;
 
   EditProfileState _currentState = EditProfileState(
-    nameController: TextEditingController(text: AppConstants.editProfileNameAll),
-    roleController: TextEditingController(text: AppConstants.defaultRole),
-    emailController: TextEditingController(text: AppConstants.defaultEmail),
-    phoneController: TextEditingController(text: AppConstants.defaultPhone),
-    companyController: TextEditingController(text: AppConstants.companyName),
+    nameController: TextEditingController(),
+    roleController: TextEditingController(),
+    emailController: TextEditingController(),
+    phoneController: TextEditingController(),
+    companyController: TextEditingController(),
   );
 
   EditProfileState get currentState => _currentState;

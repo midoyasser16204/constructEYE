@@ -97,8 +97,7 @@ class AppConstants {
   static const String pleaseWait = 'Please wait...';
   static const String createAccount = 'Create Account';
   static const String signUpMonitor = 'Join ConstructEYE to start monitoring';
-  static const String editProfileName = 'JD';
-  static const String editProfileNameAll = 'John Doe';
+  static const String editProfileName = '';
   static const String saveChange = 'Save Changes';
   static const String editProfileTitle = 'Edit Profile';
   static const String cancelButtonTitle = 'Cancel';
@@ -106,7 +105,7 @@ class AppConstants {
   static const String postion = 'Role / Position';
   static const String phoneNumber = 'Phone Number';
   static const String companyName = 'Company';
-  static const String defaultRole = "Site Manager";
-  static const String defaultEmail = "john.doe@constructeye.com";
-  static const String defaultPhone = "+1 (555) 123-4567";
+  static const String positionPlaceholder = 'Enter your role or position';
+  static const String phonePlaceholder = 'Enter your phone';
+  static const String companyPlaceholder = 'Enter your company';
 }
