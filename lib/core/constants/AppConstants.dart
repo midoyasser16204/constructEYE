@@ -72,6 +72,7 @@ class AppConstants {
   static const String loginScreenRoute = '/login';
   static const String signupScreenRoute = '/signup';
   static const String editProfileScreenRoute = '/editProfile';
+  static const String profileScreenRoute = '/profile';
 
   // -----------------------------
   // Strings
@@ -108,4 +109,5 @@ class AppConstants {
   static const String positionPlaceholder = 'Enter your role or position';
   static const String phonePlaceholder = 'Enter your phone';
   static const String companyPlaceholder = 'Enter your company';
+  static const String editButton = 'Edit';
 }
