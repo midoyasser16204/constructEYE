@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../core/constants/AppConstants.dart';
 import '../../../core/colors/AppColors.dart';
 import '../../components/SectionTitle.dart';
@@ -8,7 +9,7 @@ import '../../components/navigation_item.dart';
 import '../edit_profile_screen/EditProfileScreen.dart';
 import 'profile_bloc/ProfileBloc.dart';
 import 'profile_bloc/ProfileContract.dart';
-
+import '../../../main.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -37,6 +38,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final theme = Theme.of(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -89,7 +92,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         child: Row(
                           children: [
-                            // Avatar
                             Container(
                               width: screenWidth * 0.2,
                               height: screenWidth * 0.2,
@@ -108,7 +110,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             SizedBox(width: screenWidth * 0.04),
-                            // Name + Role
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,7 +132,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ],
                               ),
                             ),
-                            // Edit Button
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(
@@ -162,6 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
+
                 // ------------------ BODY ------------------
                 Expanded(
                   child: SingleChildScrollView(
@@ -192,32 +193,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           title: AppConstants.companyName,
                           value: state.company,
                         ),
+
                         SizedBox(height: screenHeight * 0.02),
                         SectionTitle(text: AppConstants.preferencesTitle),
+
+                        // ---------------- DARK MODE SWITCH ----------------
                         ProfileSwitchItem(
                           iconLight: AppConstants.themeContainerIcon,
                           iconDark: AppConstants.themeContainerDarkIcon,
                           title: AppConstants.darkModeTitle,
                           description: AppConstants.darkModeDescription,
-                          value: state.isDarkMode,
-                          onChanged: (v) => _bloc.eventSink.add(ToggleDarkMode(v)),
+                          value: themeProvider.isDark,
+                          onChanged: (v) => themeProvider.toggleTheme(),
                         ),
+
                         ProfileSwitchItem(
                           iconLight: AppConstants.notificationContainerIcon,
                           iconDark: AppConstants.notificationContainerDarkIcon,
                           title: AppConstants.pushNotificationsTitle,
                           description: AppConstants.pushNotificationsDescription,
                           value: state.pushNotifications,
-                          onChanged: (v) => _bloc.eventSink.add(TogglePushNotifications(v)),
+                          onChanged: (v) =>
+                              _bloc.eventSink.add(TogglePushNotifications(v)),
                         ),
+
                         ProfileSwitchItem(
                           iconLight: AppConstants.safetyContainerIcon,
                           iconDark: AppConstants.safetyContainerDarkIcon,
                           title: AppConstants.safetyAlertsTitle,
                           description: AppConstants.safetyAlertsDescription,
                           value: state.safetyAlerts,
-                          onChanged: (v) => _bloc.eventSink.add(ToggleSafetyAlerts(v)),
+                          onChanged: (v) =>
+                              _bloc.eventSink.add(ToggleSafetyAlerts(v)),
                         ),
+
                         SizedBox(height: screenHeight * 0.02),
                         SectionTitle(text: AppConstants.otherTitle),
                         NavigationItem(
@@ -236,7 +245,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           iconLight: AppConstants.logoutContainerIcon,
                           iconDark: AppConstants.logoutContainerDarkIcon,
                           title: AppConstants.logoutTitle,
-                          onTap: () => _bloc.eventSink.add(LogoutEvent()),
+                          onTap: () =>
+                              _bloc.eventSink.add(LogoutEvent()),
                           isLogout: true,
                         ),
                         SizedBox(height: screenHeight * 0.03),

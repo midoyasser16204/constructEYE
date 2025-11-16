@@ -23,10 +23,8 @@ class ProfileBloc {
     _eventController.stream.listen(_mapEventToState);
   }
 
-  void _mapEventToState(ProfileEvent event) {
-    if (event is ToggleDarkMode) {
-      _currentState = _currentState.copyWith(isDarkMode: event.value);
-    } else if (event is TogglePushNotifications) {
+  void _mapEventToState(ProfileEvent event) async {
+    if (event is TogglePushNotifications) {
       _currentState = _currentState.copyWith(pushNotifications: event.value);
     } else if (event is ToggleSafetyAlerts) {
       _currentState = _currentState.copyWith(safetyAlerts: event.value);

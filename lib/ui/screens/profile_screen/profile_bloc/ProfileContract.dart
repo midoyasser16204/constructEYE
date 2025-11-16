@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// --------------------- STATE ---------------------
 class ProfileState {
   final String name;
   final String role;
@@ -8,7 +7,6 @@ class ProfileState {
   final String phone;
   final String company;
 
-  final bool isDarkMode;
   final bool pushNotifications;
   final bool safetyAlerts;
 
@@ -18,7 +16,6 @@ class ProfileState {
     required this.email,
     required this.phone,
     required this.company,
-    this.isDarkMode = false,
     this.pushNotifications = true,
     this.safetyAlerts = true,
   });
@@ -39,20 +36,13 @@ class ProfileState {
       email: email ?? this.email,
       phone: phone ?? this.phone,
       company: company ?? this.company,
-      isDarkMode: isDarkMode ?? this.isDarkMode,
       pushNotifications: pushNotifications ?? this.pushNotifications,
       safetyAlerts: safetyAlerts ?? this.safetyAlerts,
     );
   }
 }
 
-/// --------------------- EVENTS ---------------------
 abstract class ProfileEvent {}
-
-class ToggleDarkMode extends ProfileEvent {
-  final bool value;
-  ToggleDarkMode(this.value);
-}
 
 class TogglePushNotifications extends ProfileEvent {
   final bool value;
@@ -65,5 +55,3 @@ class ToggleSafetyAlerts extends ProfileEvent {
 }
 
 class LogoutEvent extends ProfileEvent {}
-
-class GoToEditProfile extends ProfileEvent {}
