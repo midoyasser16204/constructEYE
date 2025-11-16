@@ -110,4 +110,17 @@ class AppConstants {
   static const String phonePlaceholder = 'Enter your phone';
   static const String companyPlaceholder = 'Enter your company';
   static const String editButton = 'Edit';
+  static const String accountInformationTitle = "ACCOUNT INFORMATION";
+  static const String preferencesTitle = "PREFERENCES";
+  static const String otherTitle = "OTHER";
+  static const String darkModeTitle = "Dark Mode";
+  static const String darkModeDescription = "Switch to dark theme";
+  static const String pushNotificationsTitle = "Push Notifications";
+  static const String pushNotificationsDescription = "Enable push notifications";
+  static const String safetyAlertsTitle = "Safety Alerts";
+  static const String safetyAlertsDescription = "Get safety alerts";
+  static const String changePasswordTitle = "Change Password";
+  static const String helpSupportTitle = "Help & Support";
+  static const String logoutTitle = "Logout";
+
 }

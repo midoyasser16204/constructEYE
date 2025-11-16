@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import '../../../core/constants/AppConstants.dart';
 import '../../../core/colors/AppColors.dart';
+import '../../components/SectionTitle.dart';
+import '../../components/profile_card_item.dart';
+import '../../components/profile_switch_item.dart';
+import '../../components/navigation_item.dart';
 import '../edit_profile_screen/EditProfileScreen.dart';
 import 'profile_bloc/ProfileBloc.dart';
 import 'profile_bloc/ProfileContract.dart';
-import '../../../core/themes/ThemeNotifier.dart';
+
 
 class ProfileScreen extends StatefulWidget {
-  final ThemeNotifier themeNotifier;
-  const ProfileScreen({super.key, required this.themeNotifier});
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -44,17 +46,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
           initialData: _bloc.currentState,
           builder: (context, snapshot) {
             final state = snapshot.data!;
+
             return Column(
               children: [
                 // ------------------ HEADER ------------------
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.05,
-                    vertical: screenHeight * 0.05,
+                    horizontal: screenWidth * 0.03,
+                    vertical: screenHeight * 0.03,
                   ),
                   decoration: BoxDecoration(
-                    color: theme.primaryColor,
+                    color: AppColors.primaryColor,
                     borderRadius: const BorderRadius.vertical(
                       bottom: Radius.circular(30),
                     ),
@@ -70,9 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: AppColors.background,
                         ),
                       ),
-                      SizedBox(
-                        height: screenHeight * 0.02,
-                      ),
+                      SizedBox(height: screenHeight * 0.02),
                       Container(
                         padding: EdgeInsets.all(screenWidth * 0.06),
                         decoration: BoxDecoration(
@@ -94,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               height: screenWidth * 0.2,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: theme.primaryColor,
+                                color: AppColors.primaryColor,
                               ),
                               alignment: Alignment.center,
                               child: Text(
@@ -148,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: Text(
                                   AppConstants.editButton,
                                   style: TextStyle(
-                                    color: theme.primaryColor,
+                                    color: AppColors.primaryColor,
                                     fontWeight: FontWeight.bold,
                                     fontSize: screenWidth * 0.04,
                                   ),
@@ -172,71 +173,69 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        sectionTitle("ACCOUNT INFORMATION", theme),
-                        profileItem(
-                          icon: AppConstants.mailContainerIcon,
-                          title: "Email",
+                        SectionTitle(text: AppConstants.accountInformationTitle),
+                        ProfileCardItem(
+                          iconLight: AppConstants.mailContainerIcon,
+                          iconDark: AppConstants.mailContainerDarkIcon,
+                          title: AppConstants.email,
                           value: state.email,
-                          theme: theme,
                         ),
-                        profileItem(
-                          icon: AppConstants.phoneContainerIcon,
-                          title: "Phone",
+                        ProfileCardItem(
+                          iconLight: AppConstants.phoneContainerIcon,
+                          iconDark: AppConstants.phoneContainerDarkIcon,
+                          title: AppConstants.phoneNumber,
                           value: state.phone,
-                          theme: theme,
                         ),
-                        profileItem(
-                          icon: AppConstants.companyContainerIcon,
-                          title: "Company",
+                        ProfileCardItem(
+                          iconLight: AppConstants.companyContainerIcon,
+                          iconDark: AppConstants.companyContainerDarkIcon,
+                          title: AppConstants.companyName,
                           value: state.company,
-                          theme: theme,
                         ),
                         SizedBox(height: screenHeight * 0.02),
-                        sectionTitle("PREFERENCES", theme),
-                        switchItem(
-                          icon: AppConstants.themeContainerIcon,
-                          title: "Dark Mode",
+                        SectionTitle(text: AppConstants.preferencesTitle),
+                        ProfileSwitchItem(
+                          iconLight: AppConstants.themeContainerIcon,
+                          iconDark: AppConstants.themeContainerDarkIcon,
+                          title: AppConstants.darkModeTitle,
+                          description: AppConstants.darkModeDescription,
                           value: state.isDarkMode,
-                          onChanged: (v) {
-                            _bloc.eventSink.add(ToggleDarkMode(v));
-                            widget.themeNotifier.toggleTheme(v); // فعلنا الثيم
-                          },
-                          theme: theme,
+                          onChanged: (v) => _bloc.eventSink.add(ToggleDarkMode(v)),
                         ),
-                        switchItem(
-                          icon: AppConstants.notificationContainerIcon,
-                          title: "Push Notifications",
+                        ProfileSwitchItem(
+                          iconLight: AppConstants.notificationContainerIcon,
+                          iconDark: AppConstants.notificationContainerDarkIcon,
+                          title: AppConstants.pushNotificationsTitle,
+                          description: AppConstants.pushNotificationsDescription,
                           value: state.pushNotifications,
-                          onChanged: (v) =>
-                              _bloc.eventSink.add(TogglePushNotifications(v)),
-                          theme: theme,
+                          onChanged: (v) => _bloc.eventSink.add(TogglePushNotifications(v)),
                         ),
-                        switchItem(
-                          icon: AppConstants.safetyContainerIcon,
-                          title: "Safety Alerts",
+                        ProfileSwitchItem(
+                          iconLight: AppConstants.safetyContainerIcon,
+                          iconDark: AppConstants.safetyContainerDarkIcon,
+                          title: AppConstants.safetyAlertsTitle,
+                          description: AppConstants.safetyAlertsDescription,
                           value: state.safetyAlerts,
-                          onChanged: (v) =>
-                              _bloc.eventSink.add(ToggleSafetyAlerts(v)),
-                          theme: theme,
+                          onChanged: (v) => _bloc.eventSink.add(ToggleSafetyAlerts(v)),
                         ),
                         SizedBox(height: screenHeight * 0.02),
-                        sectionTitle("OTHER", theme),
-                        navigationItem(
-                          icon: AppConstants.passwordContainerIcon,
-                          title: "Change Password",
-                          theme: theme,
+                        SectionTitle(text: AppConstants.otherTitle),
+                        NavigationItem(
+                          iconLight: AppConstants.passwordContainerIcon,
+                          iconDark: AppConstants.passwordContainerDarkIcon,
+                          title: AppConstants.changePasswordTitle,
                           onTap: () {},
                         ),
-                        navigationItem(
-                          icon: AppConstants.mailContainerIcon,
-                          title: "Help & Support",
-                          theme: theme,
+                        NavigationItem(
+                          iconLight: AppConstants.mailContainerIcon,
+                          iconDark: AppConstants.mailContainerDarkIcon,
+                          title: AppConstants.helpSupportTitle,
                           onTap: () {},
                         ),
-                        navigationItem(
-                          icon: AppConstants.logoutContainerIcon,
-                          title: "Logout",
-                          theme: theme,
+                        NavigationItem(
+                          iconLight: AppConstants.logoutContainerIcon,
+                          iconDark: AppConstants.logoutContainerDarkIcon,
+                          title: AppConstants.logoutTitle,
                           onTap: () => _bloc.eventSink.add(LogoutEvent()),
                           isLogout: true,
                         ),
@@ -248,160 +247,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             );
           },
-        ),
-      ),
-    );
-  }
-
-  // ---------------- UI COMPONENTS ------------------
-  Widget sectionTitle(String text, ThemeData theme) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Text(
-        text,
-        style: theme.textTheme.bodyMedium?.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-
-  Widget profileItem({
-    required String icon,
-    required String title,
-    required String value,
-    required ThemeData theme,
-  }) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(
-              theme.brightness == Brightness.dark ? 0.3 : 0.1,
-            ),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          SvgPicture.asset(icon, width: 26),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(value, style: theme.textTheme.bodyMedium),
-              ],
-            ),
-          ),
-          Icon(
-            Icons.arrow_forward_ios,
-            size: 16,
-            color: theme.textTheme.bodyMedium?.color,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget switchItem({
-    required String icon,
-    required String title,
-    required bool value,
-    required Function(bool) onChanged,
-    required ThemeData theme,
-  }) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(
-              theme.brightness == Brightness.dark ? 0.3 : 0.1,
-            ),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          SvgPicture.asset(icon, width: 26),
-          const SizedBox(width: 12),
-          Expanded(child: Text(title, style: theme.textTheme.bodyMedium)),
-          Switch(
-            value: value,
-            onChanged: onChanged,
-            activeColor: theme.textTheme.bodyMedium?.color,
-            inactiveThumbColor: Colors.grey[300],
-            inactiveTrackColor: Colors.grey[200],
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget navigationItem({
-    required String icon,
-    required String title,
-    required ThemeData theme,
-    required VoidCallback onTap,
-    bool isLogout = false,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: theme.cardColor,
-          borderRadius: BorderRadius.circular(18),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(
-                theme.brightness == Brightness.dark ? 0.3 : 0.1,
-              ),
-              blurRadius: 12,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            SvgPicture.asset(icon, width: 26),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                title,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: isLogout
-                      ? AppColors.errorColor
-                      : theme.textTheme.bodyMedium?.color,
-                ),
-              ),
-            ),
-            Icon(
-              Icons.arrow_forward_ios,
-              size: 16,
-              color: theme.textTheme.bodyMedium?.color,
-            ),
-          ],
         ),
       ),
     );

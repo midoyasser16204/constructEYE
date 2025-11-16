@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:constructEYE/main.dart';
-import 'package:constructEYE/core/themes/ThemeNotifier.dart';
+import 'package:constructEYE/ui/screens/profile_screen/ProfileScreen.dart';
 
 void main() {
   testWidgets('Profile screen smoke test', (WidgetTester tester) async {
-    final themeNotifier = ThemeNotifier();
-
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(themeNotifier: themeNotifier));
+    // Build ProfileScreen directly
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: ProfileScreen(),
+      ),
+    );
 
     // Verify that ProfileScreen is shown
     expect(find.text('Profile'), findsOneWidget);
