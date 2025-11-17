@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-
 import '../colors/AppColors.dart';
 
 class AppThemes {
   static final ThemeData lightTheme = ThemeData(
     primaryColor: AppColors.primaryColor,
     scaffoldBackgroundColor: AppColors.background,
+    cardColor: AppColors.card,
     colorScheme: ColorScheme.light(
       primary: AppColors.primaryColor,
       secondary: AppColors.secondaryColor,
@@ -37,13 +37,13 @@ class AppThemes {
   static final ThemeData darkTheme = ThemeData(
     primaryColor: AppColors.primaryColor,
     scaffoldBackgroundColor: AppColors.backgroundDark,
+    cardColor: AppColors.cardDark,
     colorScheme: ColorScheme.dark(
       primary: AppColors.primaryColor,
       secondary: AppColors.secondaryColor,
       error: AppColors.errorColor,
     ),
     inputDecorationTheme: InputDecorationTheme(
-
       filled: true,
       fillColor: AppColors.inputFieldBackgroundDark,
       border: OutlineInputBorder(

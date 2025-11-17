@@ -18,12 +18,12 @@ class AppConstants {
   static const String reportsIcon = 'assets/icons/reports_ico.svg';
   static const String saveIcon = 'assets/icons/save_ico.svg';
   static const String timeIcon = 'assets/icons/time_ico.svg';
+  static const String whiteArrowBackIcon = 'assets/icons/white_arrow_back_ico.svg';
   static const String loginSignupBackgroundIcon = 'assets/icons/login_signup_background.svg';
 
   // -----------------------------
   // 📦 Light Container Icons
   // -----------------------------
-  static const String whiteArrowBackIcon = 'assets/icons/white_arrow_back_ico.svg';
   static const String alertContainerIcon = 'assets/icons/alert_container_ico.svg';
   static const String cameraContainerIcon = 'assets/icons/camera_container_ico.svg';
   static const String companyContainerIcon = 'assets/icons/company_container_ico.svg';
@@ -43,7 +43,6 @@ class AppConstants {
   // -----------------------------
   // 🌑 Dark Container Icons
   // -----------------------------
-  static const String blackArrowBackIcon = 'assets/icons/black_arrow_back_ico.svg';
   static const String alertContainerDarkIcon = 'assets/icons/alert_container_dark_ico.svg';
   static const String companyContainerDarkIcon = 'assets/icons/company_container_dark_ico.svg';
   static const String completeContainerDarkIcon = 'assets/icons/complete_container_dark_ico.svg';
@@ -72,7 +71,8 @@ class AppConstants {
   static const String splashScreenRoute = '/splash';
   static const String loginScreenRoute = '/login';
   static const String signupScreenRoute = '/signup';
-  static const String forgetPasswordScreenRoute = '/forget_password';
+  static const String editProfileScreenRoute = '/editProfile';
+  static const String profileScreenRoute = '/profile';
 
   // -----------------------------
   // Strings
@@ -82,6 +82,7 @@ class AppConstants {
   static const String welcomeBack = 'Welcome Back';
   static const String signInMonitor = 'Sign in to monitor your construction sites';
   static const String email = 'Email';
+  static const String emailAddress = 'Email Address';
   static const String emailPlaceholder = 'Enter your email';
   static const String password = 'Password';
   static const String passwordPlaceholder = 'Enter your password';
@@ -97,7 +98,29 @@ class AppConstants {
   static const String pleaseWait = 'Please wait...';
   static const String createAccount = 'Create Account';
   static const String signUpMonitor = 'Join ConstructEYE to start monitoring';
-  static const String forgetPasswordSubtitle = 'Enter your email address and we will send you a verification code to reset your password';
-  static const String resetPassword = 'Reset Password';
-  static const String backToLogin = 'Back to Login';
+  static const String editProfileName = '';
+  static const String saveChange = 'Save Changes';
+  static const String editProfileTitle = 'Edit Profile';
+  static const String cancelButtonTitle = 'Cancel';
+  static const String changeProfilePicture = 'Tap to change photo';
+  static const String postion = 'Role / Position';
+  static const String phoneNumber = 'Phone Number';
+  static const String companyName = 'Company';
+  static const String positionPlaceholder = 'Enter your role or position';
+  static const String phonePlaceholder = 'Enter your phone';
+  static const String companyPlaceholder = 'Enter your company';
+  static const String editButton = 'Edit';
+  static const String accountInformationTitle = "ACCOUNT INFORMATION";
+  static const String preferencesTitle = "PREFERENCES";
+  static const String otherTitle = "OTHER";
+  static const String darkModeTitle = "Dark Mode";
+  static const String darkModeDescription = "Switch to dark theme";
+  static const String pushNotificationsTitle = "Push Notifications";
+  static const String pushNotificationsDescription = "Enable push notifications";
+  static const String safetyAlertsTitle = "Safety Alerts";
+  static const String safetyAlertsDescription = "Get safety alerts";
+  static const String changePasswordTitle = "Change Password";
+  static const String helpSupportTitle = "Help & Support";
+  static const String logoutTitle = "Logout";
+
 }
