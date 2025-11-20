@@ -1,5 +1,5 @@
 import '../../repository/AuthenticationRepository.dart';
 
-abstract class LogoutUseCase {
+abstract class LogOutUseCase {
   Future<void> call();
 }

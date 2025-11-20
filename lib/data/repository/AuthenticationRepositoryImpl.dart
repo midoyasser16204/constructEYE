@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:constructEYE/data/data_source/shared_pref/ISharedPrefDataSource.dart';
+import 'package:constructEYE/data/data_source/shared_pref/SharedPrefDataSource.dart';
 import 'package:constructEYE/domain/entities/UserEntity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../domain/repository/AuthenticationRepository.dart';
@@ -59,10 +59,14 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       UserCredential userCredential = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
 
-      final userEntity = UserEntity.dart(
+      final userEntity = UserEntity(
         uid: userCredential.user!.uid,
         email: email,
         fullName: fullName,
+        profilePictureUrl: null,
+        phone: 0,
+        role: 'user',
+        company: '',
       );
 
       await _firestore
@@ -90,10 +94,16 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<UserEntity?> getCurrentUser() async {
-    final user = _firebaseAuth.currentUser;
-    if (user == null) return null;
+    // 1️⃣ Get UID from SharedPreferences
+    final uid = _sharedPref.getUid();
+    if (uid == null) return null;
 
-    final userDoc = await _firestore.collection('users').doc(user.uid).get();
-    return UserEntity.fromMap(userDoc.data()!);
+    // 2️⃣ Fetch user document from Firestore by UID
+    final userDoc = await _firestore.collection('users').doc(uid).get();
+    if (!userDoc.exists || userDoc.data() == null) return null;
+
+    final userEntity = UserEntity.fromMap(userDoc.data()!);
+
+    return userEntity;
   }
 }

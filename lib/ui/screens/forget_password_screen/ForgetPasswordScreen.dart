@@ -1,13 +1,10 @@
 import 'package:constructEYE/core/constants/AppConstants.dart';
+import 'package:constructEYE/di/DependencyInjection.dart';
 import 'package:constructEYE/ui/components/CustomButton.dart';
 import 'package:constructEYE/ui/components/TextInputField.dart';
 import 'package:constructEYE/ui/components/AppSvgIcon.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../data/repository/AuthenticationRepositoryImpl.dart';
-import '../../../domain/usecase/forget_password_use_case/ForgetPasswordUseCaseImpl.dart';
 import 'forget_password_bloc/ForgetPasswordBloc.dart';
 import 'forget_password_bloc/ForgetPasswordContract.dart';
 
@@ -19,14 +16,7 @@ class ForgetPasswordScreen extends StatefulWidget {
 }
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
-  final ForgetPasswordBloc _bloc = ForgetPasswordBloc(
-    ForgotPasswordUseCaseImpl(
-      AuthenticationRepositoryImpl(
-        firebaseAuth: FirebaseAuth.instance,
-        firestore: FirebaseFirestore.instance,
-      ),
-    ),
-  );
+  late final ForgetPasswordBloc _bloc = getIt<ForgetPasswordBloc>();
 
   final _emailController = TextEditingController();
 

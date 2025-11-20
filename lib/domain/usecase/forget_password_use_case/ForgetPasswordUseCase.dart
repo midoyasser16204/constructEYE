@@ -1,3 +1,3 @@
-abstract class ForgotPasswordUseCase {
+abstract class ForgetPasswordUseCase {
   Future<void> execute(String email);
 }

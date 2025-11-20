@@ -1,11 +1,14 @@
+import 'package:constructEYE/core/themes/AppThemes.dart';
+import 'package:constructEYE/di/DependencyInjection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../../../core/constants/AppConstants.dart';
 import '../../../core/colors/AppColors.dart';
 import '../../components/SectionTitle.dart';
-import '../../components/profile_card_item.dart';
-import '../../components/profile_switch_item.dart';
-import '../../components/navigation_item.dart';
+import '../../components/ProfileCardItem.dart';
+import '../../components/ProfileSwitchItem.dart';
+import '../../components/NavigationItem.dart';
 import '../edit_profile_screen/EditProfileScreen.dart';
 import 'profile_bloc/ProfileBloc.dart';
 import 'profile_bloc/ProfileContract.dart';
@@ -19,7 +22,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final ProfileBloc _bloc = ProfileBloc();
+  late final ProfileBloc _bloc = getIt<ProfileBloc>();
 
   @override
   void dispose() {
@@ -43,6 +46,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           initialData: _bloc.currentState,
           builder: (context, snapshot) {
             final state = snapshot.data!;
+
+            if (state.isLoggedOut) {
+              Future.microtask(() {
+                Navigator.pushReplacementNamed(
+                  context,
+                  AppConstants.loginScreenRoute,
+                );
+              });
+            }
 
             return Column(
               children: [
@@ -94,13 +106,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 color: AppColors.primaryColor,
                               ),
                               alignment: Alignment.center,
-                              child: Text(
-                                state.name.substring(0, 2).toUpperCase(),
-                                style: theme.textTheme.bodyLarge?.copyWith(
-                                  color: AppColors.background,
-                                  fontSize: screenWidth * 0.07,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              child: SvgPicture.asset(
+                                AppConstants.personIcon,
+                                width: screenWidth * 0.15,
+                                height: screenWidth * 0.15,
+                                color: theme.scaffoldBackgroundColor,
                               ),
                             ),
                             SizedBox(width: screenWidth * 0.04),
@@ -168,7 +178,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SectionTitle(text: AppConstants.accountInformationTitle),
+                        SectionTitle(
+                          text: AppConstants.accountInformationTitle,
+                        ),
                         ProfileCardItem(
                           iconLight: AppConstants.mailContainerIcon,
                           iconDark: AppConstants.mailContainerDarkIcon,
@@ -205,7 +217,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           iconLight: AppConstants.notificationContainerIcon,
                           iconDark: AppConstants.notificationContainerDarkIcon,
                           title: AppConstants.pushNotificationsTitle,
-                          description: AppConstants.pushNotificationsDescription,
+                          description:
+                              AppConstants.pushNotificationsDescription,
                           value: state.pushNotifications,
                           onChanged: (v) =>
                               _bloc.eventSink.add(TogglePushNotifications(v)),
@@ -239,8 +252,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           iconLight: AppConstants.logoutContainerIcon,
                           iconDark: AppConstants.logoutContainerDarkIcon,
                           title: AppConstants.logoutTitle,
-                          onTap: () =>
-                              _bloc.eventSink.add(LogoutEvent()),
+                          onTap: () => _bloc.eventSink.add(LogoutEvent()),
                           isLogout: true,
                         ),
                         SizedBox(height: screenHeight * 0.03),

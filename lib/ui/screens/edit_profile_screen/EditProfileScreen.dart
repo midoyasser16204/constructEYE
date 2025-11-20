@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:constructEYE/di/DependencyInjection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../core/colors/AppColors.dart';
@@ -17,12 +18,11 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  late final EditProfileBloc _bloc;
+  late final EditProfileBloc _bloc = getIt<EditProfileBloc>();
 
   @override
   void initState() {
     super.initState();
-    _bloc = EditProfileBloc();
   }
 
   @override

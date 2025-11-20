@@ -1,19 +1,33 @@
+import 'dart:ui';
+
 class UserEntity {
   final String uid;
   final String email;
   final String fullName;
+  final Image? profilePictureUrl;
+  final int phone;
+  final String role;
+  final String company;
 
-  UserEntity.dart({
+  UserEntity({
     required this.uid,
     required this.email,
     required this.fullName,
+    this.profilePictureUrl,
+    required this.phone,
+    required this.role,
+    required this.company,
   });
 
   factory UserEntity.fromMap(Map<String, dynamic> map) {
-    return UserEntity.dart(
+    return UserEntity(
       uid: map['uid'],
       email: map['email'],
       fullName: map['fullName'],
+      profilePictureUrl: map['profilePictureUrl'],
+      phone: map['phone'],
+      role: map['role'],
+      company: map['company'],
     );
   }
 
@@ -22,6 +36,10 @@ class UserEntity {
       'uid': uid,
       'email': email,
       'fullName': fullName,
+      'profilePictureUrl': profilePictureUrl,
+      'phone': phone,
+      'role': role,
+      'company': company,
     };
   }
 }

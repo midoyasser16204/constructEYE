@@ -1,10 +1,10 @@
 import '../../repository/AuthenticationRepository.dart';
 import 'LogOutUseCase.dart';
 
-class LogoutUseCaseImpl implements LogoutUseCase {
+class LogOutUseCaseImpl implements LogOutUseCase {
   final AuthenticationRepository _authRepo;
 
-  LogoutUseCaseImpl(this._authRepo);
+  LogOutUseCaseImpl(this._authRepo);
 
   @override
   Future<void> call() async {

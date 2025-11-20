@@ -1,3 +1,4 @@
+import 'package:constructEYE/di/DependencyInjection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -14,12 +15,11 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  late final SplashBloc _bloc;
+  late final SplashBloc _bloc = getIt<SplashBloc>();
 
   @override
   void initState() {
     super.initState();
-    _bloc = SplashBloc();
     _bloc.eventSink.add(SplashStarted());
   }
 
@@ -43,7 +43,11 @@ class _SplashScreenState extends State<SplashScreen> {
           final state = snapshot.data!;
 
           // Navigate when finished
-          if (state.isFinished) {
+          if (state.navigateToProfile) {
+            Future.microtask(() {
+              Navigator.pushReplacementNamed(context, AppConstants.profileScreenRoute);
+            });
+          } else if (state.navigateToSignIn) {
             Future.microtask(() {
               Navigator.pushReplacementNamed(context, AppConstants.loginScreenRoute);
             });

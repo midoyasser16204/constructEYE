@@ -1,12 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:constructEYE/core/constants/AppConstants.dart';
+import 'package:constructEYE/di/DependencyInjection.dart';
 import 'package:constructEYE/ui/components/CustomButton.dart';
 import 'package:constructEYE/ui/components/TextInputField.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../../../data/repository/AuthenticationRepositoryImpl.dart';
-import '../../../domain/usecase/login_use_case/LoginUseCaseImpl.dart';
 import 'login_bloc/LogInBloc.dart';
 import 'login_bloc/LogInContract.dart';
 
@@ -18,14 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final LoginBloc _bloc = LoginBloc(
-    LoginUseCaseImpl(
-      AuthenticationRepositoryImpl(
-        firebaseAuth: FirebaseAuth.instance,
-        firestore: FirebaseFirestore.instance,
-      ),
-    ),
-  );
+  late final LoginBloc _bloc = getIt<LoginBloc>();
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -73,6 +62,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     );
                     _bloc.eventSink.add(ClearGeneralError());
+                  }
+
+                  // Navigate to Profile screen on login success
+                  if (state.isSuccess) {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      AppConstants
+                          .profileScreenRoute, // your Profile screen route
+                    );
                   }
                 });
 

@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:constructEYE/data/repository/AuthenticationRepositoryImpl.dart';
+import 'package:constructEYE/di/DependencyInjection.dart';
 import 'package:constructEYE/ui/screens/signup_screen/signup_bloc/SignUpBloc.dart';
 import 'package:constructEYE/ui/screens/signup_screen/signup_bloc/SignUpContract.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/AppConstants.dart';
-import '../../../domain/usecase/signup_use_case/SignUpUseCaseImpl.dart';
 import '../../components/CustomButton.dart';
 import '../../components/TextInputField.dart';
 
@@ -17,14 +14,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final SignupBloc _bloc = SignupBloc(
-    SignUpUseCaseImpl(
-      AuthenticationRepositoryImpl(
-        firebaseAuth: FirebaseAuth.instance,
-        firestore: FirebaseFirestore.instance,
-      ),
-    ),
-  );
+  late final SignupBloc _bloc = getIt<SignupBloc>();
 
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -65,7 +55,9 @@ class _SignupScreenState extends State<SignupScreen> {
               builder: (context, snapshot) {
                 final state = snapshot.data!;
 
+                // Use addPostFrameCallback to avoid build errors
                 WidgetsBinding.instance.addPostFrameCallback((_) {
+                  // Show general error
                   if (state.generalError != null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -75,6 +67,14 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     );
                     _bloc.eventSink.add(ClearGeneralError());
+                  }
+
+                  // Navigate when signup is successful
+                  if (state.isSuccess) {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      AppConstants.profileScreenRoute, // your profile route
+                    );
                   }
                 });
 

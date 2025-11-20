@@ -4,7 +4,7 @@ import 'ForgetPasswordContract.dart';
 import '../../../../domain/usecase/forget_password_use_case/ForgetPasswordUseCase.dart';
 
 class ForgetPasswordBloc {
-  final ForgotPasswordUseCase _useCase;
+  final ForgetPasswordUseCase _useCase;
 
   final _stateController = StreamController<ForgetPasswordState>.broadcast();
   Stream<ForgetPasswordState> get state => _stateController.stream;

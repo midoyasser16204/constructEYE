@@ -1,4 +1,4 @@
-import 'package:constructEYE/data/data_source/shared_pref/ISharedPrefDataSource.dart';
+import 'package:constructEYE/data/data_source/shared_pref/SharedPrefDataSource.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefDataSourceImpl implements SharedPrefDataSource{

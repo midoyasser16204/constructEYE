@@ -74,6 +74,7 @@ class AppConstants {
   static const String signupScreenRoute = '/signup';
   static const String editProfileScreenRoute = '/editProfile';
   static const String profileScreenRoute = '/profile';
+  static const String forgetPasswordScreenRoute = '/forgetPassword';
 
   // -----------------------------
   // Strings
