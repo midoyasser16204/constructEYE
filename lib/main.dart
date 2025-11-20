@@ -1,5 +1,6 @@
 import 'package:constructEYE/core/constants/AppConstants.dart';
 import 'package:constructEYE/ui/screens/profile_screen/ProfileScreen.dart';
+import 'package:constructEYE/ui/screens/projects_screen/ProjectsScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -52,9 +53,10 @@ class MyApp extends StatelessWidget {
       theme: AppThemes.lightTheme,
       darkTheme: AppThemes.darkTheme,
       themeMode: themeProvider.isDark ? ThemeMode.dark : ThemeMode.light,
-      initialRoute: AppConstants.profileScreenRoute,
+      initialRoute: AppConstants.projectsScreenRoute,
       routes: {
         AppConstants.profileScreenRoute: (context) => const ProfileScreen(),
+        AppConstants.projectsScreenRoute: (context) => const ProjectsScreen(),
       },
     );
   }

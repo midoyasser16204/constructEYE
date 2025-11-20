@@ -20,6 +20,7 @@ class AppConstants {
   static const String timeIcon = 'assets/icons/time_ico.svg';
   static const String whiteArrowBackIcon = 'assets/icons/white_arrow_back_ico.svg';
   static const String loginSignupBackgroundIcon = 'assets/icons/login_signup_background.svg';
+  static const String searchIcon = 'assets/icons/search_ico.svg';
 
   // -----------------------------
   // 📦 Light Container Icons
@@ -73,6 +74,7 @@ class AppConstants {
   static const String signupScreenRoute = '/signup';
   static const String editProfileScreenRoute = '/editProfile';
   static const String profileScreenRoute = '/profile';
+  static const String projectsScreenRoute = '/projects';
 
   // -----------------------------
   // Strings
