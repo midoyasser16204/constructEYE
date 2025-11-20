@@ -16,4 +16,6 @@ abstract class AuthenticationRepository {
 
   /// Optional: get current user
   Future<UserEntity?> getCurrentUser();
+
+  Future<void> logout();
 }

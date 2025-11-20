@@ -18,12 +18,12 @@ class AppConstants {
   static const String reportsIcon = 'assets/icons/reports_ico.svg';
   static const String saveIcon = 'assets/icons/save_ico.svg';
   static const String timeIcon = 'assets/icons/time_ico.svg';
-  static const String whiteArrowBackIcon = 'assets/icons/white_arrow_back_ico.svg';
   static const String loginSignupBackgroundIcon = 'assets/icons/login_signup_background.svg';
 
   // -----------------------------
   // 📦 Light Container Icons
   // -----------------------------
+  static const String whiteArrowBackIcon = 'assets/icons/white_arrow_back_ico.svg';
   static const String alertContainerIcon = 'assets/icons/alert_container_ico.svg';
   static const String cameraContainerIcon = 'assets/icons/camera_container_ico.svg';
   static const String companyContainerIcon = 'assets/icons/company_container_ico.svg';
@@ -43,6 +43,7 @@ class AppConstants {
   // -----------------------------
   // 🌑 Dark Container Icons
   // -----------------------------
+  static const String blackArrowBackIcon = 'assets/icons/black_arrow_back_ico.svg';
   static const String alertContainerDarkIcon = 'assets/icons/alert_container_dark_ico.svg';
   static const String companyContainerDarkIcon = 'assets/icons/company_container_dark_ico.svg';
   static const String completeContainerDarkIcon = 'assets/icons/complete_container_dark_ico.svg';
@@ -122,5 +123,7 @@ class AppConstants {
   static const String changePasswordTitle = "Change Password";
   static const String helpSupportTitle = "Help & Support";
   static const String logoutTitle = "Logout";
-
+  static const String forgetPasswordSubtitle = 'Enter your email address and we will send you a verification code to reset your password';
+  static const String resetPassword = 'Reset Password';
+  static const String backToLogin = 'Back to Login';
 }
