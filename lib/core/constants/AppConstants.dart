@@ -125,4 +125,13 @@ class AppConstants {
   static const String helpSupportTitle = "Help & Support";
   static const String logoutTitle = "Logout";
 
+
+  // ProjectsScreen.dart strings
+static const String selectYourProject = "Select Your Project";
+static const String searchProject = "Search Project";
+static const String projectLocationPlaceholder = "asdsa"; // placeholder example
+static const String projectStatusActive = "active"; // placeholder example
+static const String projectTitlePlaceholder = "qweqwe"; // placeholder example
+
+
 }
