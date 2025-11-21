@@ -64,8 +64,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         email: email,
         fullName: fullName,
         profilePictureUrl: null,
-        phone: 0,
-        role: 'user',
+        phone: '',
+        role: '',
         company: '',
       );
 
@@ -90,20 +90,5 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     } catch (e) {
       throw Exception('Failed to send reset email: ${e.toString()}');
     }
-  }
-
-  @override
-  Future<UserEntity?> getCurrentUser() async {
-    // 1️⃣ Get UID from SharedPreferences
-    final uid = _sharedPref.getUid();
-    if (uid == null) return null;
-
-    // 2️⃣ Fetch user document from Firestore by UID
-    final userDoc = await _firestore.collection('users').doc(uid).get();
-    if (!userDoc.exists || userDoc.data() == null) return null;
-
-    final userEntity = UserEntity.fromMap(userDoc.data()!);
-
-    return userEntity;
   }
 }

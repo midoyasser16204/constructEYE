@@ -1,11 +1,12 @@
 import 'package:constructEYE/domain/entities/UserEntity.dart';
+import 'package:constructEYE/domain/repository/UserRepository.dart';
 
 import '../../repository/AuthenticationRepository.dart';
 import 'GetCurrentUserUseCase.dart';
 
 class GetCurrentUserUseCaseImpl implements GetCurrentUserUseCase {
 
-  final AuthenticationRepository _repository;
+  final UserRepository _repository;
 
   GetCurrentUserUseCaseImpl(this._repository);
 

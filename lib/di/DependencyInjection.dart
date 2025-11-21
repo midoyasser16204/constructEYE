@@ -1,7 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:constructEYE/data/repository/UserRepositoryImpl.dart';
+import 'package:constructEYE/domain/repository/UserRepository.dart';
 import 'package:constructEYE/domain/usecase/get_current_user_use_case/GetCurrentUserUseCase.dart';
 import 'package:constructEYE/domain/usecase/get_current_user_use_case/GetCurrentUserUseCaseImpl.dart';
+import 'package:constructEYE/domain/usecase/update_user_profile_use_case/UpdateUserProfileUseCase.dart';
+import 'package:constructEYE/domain/usecase/update_user_profile_use_case/UpdateUserProfileUseCaseImpl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/data_source/shared_pref/SharedPrefDataSource.dart';
@@ -34,7 +39,10 @@ Future<void> configureDependencies() async {
 
   // Register Firebase instances as singletons
   getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
-  getIt.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  getIt.registerLazySingleton<FirebaseFirestore>(
+    () => FirebaseFirestore.instance,
+  );
+  getIt.registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
 
   // ========== Data Sources ==========
   getIt.registerLazySingleton<SharedPrefDataSource>(
@@ -47,6 +55,14 @@ Future<void> configureDependencies() async {
       firebaseAuth: getIt<FirebaseAuth>(),
       firestore: getIt<FirebaseFirestore>(),
       sharedPref: getIt<SharedPrefDataSource>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<UserRepository>(
+    () => UserRepositoryImpl(
+      firestore: getIt<FirebaseFirestore>(),
+      sharedPref: getIt<SharedPrefDataSource>(),
+      storage: getIt<FirebaseStorage>(),
     ),
   );
 
@@ -68,18 +84,17 @@ Future<void> configureDependencies() async {
   );
 
   getIt.registerLazySingleton<GetCurrentUserUseCase>(
-        () => GetCurrentUserUseCaseImpl(getIt<AuthenticationRepository>()),
+    () => GetCurrentUserUseCaseImpl(getIt<UserRepository>()),
   );
 
+  getIt.registerLazySingleton<UpdateUserProfileUseCase>(
+    () => UpdateUserProfileUseCaseImpl(getIt<UserRepository>()),
+  );
   // ========== BLoCs ==========
   // BLoCs are registered as factories so each screen gets a new instance
-  getIt.registerFactory<LoginBloc>(
-    () => LoginBloc(getIt<LoginUseCase>()),
-  );
+  getIt.registerFactory<LoginBloc>(() => LoginBloc(getIt<LoginUseCase>()));
 
-  getIt.registerFactory<SignupBloc>(
-    () => SignupBloc(getIt<SignUpUseCase>()),
-  );
+  getIt.registerFactory<SignupBloc>(() => SignupBloc(getIt<SignUpUseCase>()));
 
   getIt.registerFactory<ForgetPasswordBloc>(
     () => ForgetPasswordBloc(getIt<ForgetPasswordUseCase>()),
@@ -90,13 +105,10 @@ Future<void> configureDependencies() async {
   );
 
   getIt.registerFactory<ProfileBloc>(
-    () => ProfileBloc(
-      getIt<GetCurrentUserUseCase>(),
-      getIt<LogOutUseCase>(),
-    ),
+    () => ProfileBloc(getIt<GetCurrentUserUseCase>(), getIt<LogOutUseCase>()),
   );
 
   getIt.registerFactory<EditProfileBloc>(
-    () => EditProfileBloc(),
+    () => EditProfileBloc(getIt<UpdateUserProfileUseCase>(), getIt<GetCurrentUserUseCase>()),
   );
 }

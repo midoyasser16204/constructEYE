@@ -98,20 +98,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         child: Row(
                           children: [
-                            Container(
-                              width: screenWidth * 0.2,
-                              height: screenWidth * 0.2,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.primaryColor,
+                            state.imageUrl != null &&
+                                state.imageUrl!.isNotEmpty
+                                ? ClipOval(
+                              child: Image.network(
+                                state.imageUrl!,
+                                fit: BoxFit.cover,
+                                width: screenWidth * 0.2,
+                                height: screenWidth * 0.2,
                               ),
-                              alignment: Alignment.center,
-                              child: SvgPicture.asset(
-                                AppConstants.personIcon,
-                                width: screenWidth * 0.15,
-                                height: screenWidth * 0.15,
-                                color: theme.scaffoldBackgroundColor,
-                              ),
+                            )
+                                : SvgPicture.asset(
+                              AppConstants.personIcon,
+                              width: screenWidth * 0.15,
+                              height: screenWidth * 0.15,
+                              color: AppColors.primaryColor,
                             ),
                             SizedBox(width: screenWidth * 0.04),
                             Expanded(

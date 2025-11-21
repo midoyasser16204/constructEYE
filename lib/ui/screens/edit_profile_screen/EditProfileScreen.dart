@@ -9,7 +9,6 @@ import '../../components/TextInputField.dart';
 import 'edit_profile_bloc/EditProfileContract.dart';
 import 'edit_profile_bloc/EditProfileBloc.dart';
 
-
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
 
@@ -18,17 +17,21 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  late final EditProfileBloc _bloc = getIt<EditProfileBloc>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final EditProfileBloc _bloc = getIt<EditProfileBloc>();
 
   @override
   void dispose() {
     _bloc.dispose();
     super.dispose();
+  }
+
+  void _showSnackBar(String msg, {bool success = true}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        backgroundColor: success ? Colors.green : Colors.red,
+      ),
+    );
   }
 
   @override
@@ -40,209 +43,242 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
-        child: Column(
-          children: [
-            // Header
-            Container(
-              padding: EdgeInsets.all(screenWidth * 0.05),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: theme.primaryColor,
-                borderRadius: const BorderRadius.vertical(bottom: Radius.circular(25)),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: Container(
-                          width: screenWidth * 0.1,
-                          height: screenWidth * 0.1,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(screenWidth * 0.04),
-                          ),
-                          alignment: Alignment.center,
-                          child: SvgPicture.asset(
-                            AppConstants.blueArrowBackIcon,
-                            width: screenWidth * 0.1,
-                            height: screenWidth * 0.1,
-                          ),
+        child: StreamBuilder<EditProfileState>(
+          stream: _bloc.state,
+          initialData: _bloc.currentState,
+          builder: (context, snapshot) {
+            final state = snapshot.data!;
+            return Stack(
+              children: [
+                Column(
+                  children: [
+                    // Header
+                    Container(
+                      padding: EdgeInsets.all(screenWidth * 0.05),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: theme.primaryColor,
+                        borderRadius: const BorderRadius.vertical(
+                          bottom: Radius.circular(25),
                         ),
                       ),
-                      SizedBox(width: screenWidth * 0.02),
-                      Text(
-                        AppConstants.editProfileTitle,
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          fontSize: screenWidth * 0.07,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.background,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: screenHeight * 0.02),
-                  StreamBuilder<EditProfileState>(
-                    stream: _bloc.state,
-                    initialData: _bloc.currentState,
-                    builder: (context, snapshot) {
-                      final state = snapshot.data!;
-                      return GestureDetector(
-                        onTap: () => _bloc.eventSink.add(ChangeImageEvent()),
-                        child: Stack(
-                          alignment: Alignment.bottomRight,
-                          children: [
-                            Container(
-                              width: screenWidth * 0.25,
-                              height: screenWidth * 0.25,
-                              decoration: BoxDecoration(
-                                color: theme.inputDecorationTheme.fillColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: state.imagePath == null
-                                  ? Center(
-                                child: Text(
-                                  AppConstants.editProfileName,
-                                  style: theme.textTheme.bodyLarge?.copyWith(
-                                    fontSize: screenWidth * 0.07,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              )
-                                  : ClipOval(
-                                child: Image.file(
-                                  File(state.imagePath!),
-                                  fit: BoxFit.cover,
-                                  width: screenWidth * 0.25,
-                                  height: screenWidth * 0.25,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: screenWidth * 0.08,
-                              height: screenWidth * 0.08,
-                              child: Center(
-                                child: SvgPicture.asset(
-                                  AppConstants.cameraContainerIcon,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () => Navigator.pop(context),
+                                child: Container(
                                   width: screenWidth * 0.1,
                                   height: screenWidth * 0.1,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(
+                                      screenWidth * 0.04,
+                                    ),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: SvgPicture.asset(
+                                    AppConstants.blueArrowBackIcon,
+                                    width: screenWidth * 0.1,
+                                    height: screenWidth * 0.1,
+                                  ),
                                 ),
                               ),
+                              SizedBox(width: screenWidth * 0.02),
+                              Text(
+                                AppConstants.editProfileTitle,
+                                style: theme.textTheme.bodyLarge?.copyWith(
+                                  fontSize: screenWidth * 0.07,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.background,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: screenHeight * 0.02),
+                          GestureDetector(
+                            onTap: () =>
+                                _bloc.eventSink.add(ChangeImageEvent()),
+                            child: Stack(
+                              alignment: Alignment.bottomRight,
+                              children: [
+                                Container(
+                                  width: screenWidth * 0.22,
+                                  height: screenWidth * 0.22,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: theme.inputDecorationTheme.fillColor,
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: state.imagePath != null
+                                      ? ClipOval(
+                                          child: Image.file(
+                                            File(state.imagePath!),
+                                            fit: BoxFit.cover,
+                                            width: screenWidth * 0.22,
+                                            height: screenWidth * 0.22,
+                                          ),
+                                        )
+                                      : state.imageUrl != null &&
+                                            state.imageUrl!.isNotEmpty
+                                      ? ClipOval(
+                                          child: Image.network(
+                                            state.imageUrl!,
+                                            fit: BoxFit.cover,
+                                            width: screenWidth * 0.22,
+                                            height: screenWidth * 0.22,
+                                          ),
+                                        )
+                                      : SvgPicture.asset(
+                                          AppConstants.personIcon,
+                                          width: screenWidth * 0.15,
+                                          height: screenWidth * 0.15,
+                                          color: AppColors.primaryColor,
+                                        ),
+                                ),
+
+                                Container(
+                                  width: screenWidth * 0.08,
+                                  height: screenWidth * 0.08,
+                                  child: Center(
+                                    child: SvgPicture.asset(
+                                      AppConstants.cameraContainerIcon,
+                                      width: screenWidth * 0.1,
+                                      height: screenWidth * 0.1,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
+                          ),
+                          SizedBox(height: screenHeight * 0.01),
+                          Text(
+                            AppConstants.changeProfilePicture,
+                            style: TextStyle(
+                              color: AppColors.background,
+                              fontSize: screenWidth * 0.04,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Body
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: EdgeInsets.all(screenWidth * 0.045).copyWith(
+                          bottom:
+                              MediaQuery.of(context).viewInsets.bottom +
+                              screenHeight * 0.02,
+                        ),
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Input fields container
+                            Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth * 0.045,
+                                vertical: screenHeight * 0.025,
+                              ),
+                              margin: EdgeInsets.only(
+                                bottom: screenHeight * 0.025,
+                              ),
+                              decoration: BoxDecoration(
+                                color: theme.cardColor,
+                                borderRadius: BorderRadius.circular(18),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(
+                                      theme.brightness == Brightness.dark
+                                          ? 0.3
+                                          : 0.15,
+                                    ),
+                                    blurRadius: 25,
+                                    spreadRadius: 1,
+                                    offset: const Offset(0, 12),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextInputField(
+                                    title: AppConstants.name,
+                                    hintText: AppConstants.namePlaceholder,
+                                    controller: state.nameController,
+                                    onChanged: (v) =>
+                                        _bloc.eventSink.add(NameChanged(v)),
+                                  ),
+                                  SizedBox(height: screenHeight * 0.02),
+                                  TextInputField(
+                                    title: AppConstants.postion,
+                                    hintText: AppConstants.positionPlaceholder,
+                                    controller: state.roleController,
+                                    onChanged: (v) =>
+                                        _bloc.eventSink.add(RoleChanged(v)),
+                                  ),
+                                  SizedBox(height: screenHeight * 0.02),
+                                  TextInputField(
+                                    title: AppConstants.emailAddress,
+                                    hintText: AppConstants.emailPlaceholder,
+                                    controller: state.emailController,
+                                    onChanged: (v) =>
+                                        _bloc.eventSink.add(EmailChanged(v)),
+                                  ),
+                                  SizedBox(height: screenHeight * 0.02),
+                                  TextInputField(
+                                    title: AppConstants.phoneNumber,
+                                    hintText: AppConstants.phonePlaceholder,
+                                    controller: state.phoneController,
+                                    onChanged: (v) =>
+                                        _bloc.eventSink.add(PhoneChanged(v)),
+                                  ),
+                                  SizedBox(height: screenHeight * 0.02),
+                                  TextInputField(
+                                    title: AppConstants.companyName,
+                                    hintText: AppConstants.companyPlaceholder,
+                                    controller: state.companyController,
+                                    onChanged: (v) =>
+                                        _bloc.eventSink.add(CompanyChanged(v)),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            // Save Button
+                            CustomButton(
+                              text: AppConstants.saveChange,
+                              onPressed: () =>
+                                  _bloc.eventSink.add(SaveProfileEvent()),
+                            ),
+                            SizedBox(height: screenHeight * 0.015),
+
+                            // Cancel Button
+                            CustomButton(
+                              text: AppConstants.cancelButtonTitle,
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                            SizedBox(height: screenHeight * 0.03),
                           ],
                         ),
-                      );
-                    },
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  Text(
-                    AppConstants.changeProfilePicture,
-                    style: TextStyle(
-                      color: AppColors.background,
-                      fontSize: screenWidth * 0.04,
-                      fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Body
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.all(screenWidth * 0.045)
-                    .copyWith(bottom: MediaQuery.of(context).viewInsets.bottom + screenHeight * 0.02),
-                physics: const BouncingScrollPhysics(),
-                child: StreamBuilder<EditProfileState>(
-                  stream: _bloc.state,
-                  initialData: _bloc.currentState,
-                  builder: (context, snapshot) {
-                    final state = snapshot.data!;
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Input fields container
-                        Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.045,
-                            vertical: screenHeight * 0.025,
-                          ),
-                          margin: EdgeInsets.only(bottom: screenHeight * 0.025),
-                          decoration: BoxDecoration(
-                            color: theme.cardColor,
-                            borderRadius: BorderRadius.circular(18),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(theme.brightness == Brightness.dark ? 0.3 : 0.15),
-                                blurRadius: 25,
-                                spreadRadius: 1,
-                                offset: const Offset(0, 12),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextInputField(
-                                title: AppConstants.name,
-                                hintText: AppConstants.namePlaceholder,
-                                controller: state.nameController,
-                                onChanged: (v) => _bloc.eventSink.add(NameChanged(v)),
-                              ),
-                              SizedBox(height: screenHeight * 0.02),
-                              TextInputField(
-                                title: AppConstants.postion,
-                                hintText: AppConstants.positionPlaceholder,
-                                controller: state.roleController,
-                                onChanged: (v) => _bloc.eventSink.add(RoleChanged(v)),
-                              ),
-                              SizedBox(height: screenHeight * 0.02),
-                              TextInputField(
-                                title: AppConstants.emailAddress,
-                                hintText: AppConstants.emailPlaceholder,
-                                controller: state.emailController,
-                                onChanged: (v) => _bloc.eventSink.add(EmailChanged(v)),
-                              ),
-                              SizedBox(height: screenHeight * 0.02),
-                              TextInputField(
-                                title: AppConstants.phoneNumber,
-                                hintText: AppConstants.phonePlaceholder,
-                                controller: state.phoneController,
-                                onChanged: (v) => _bloc.eventSink.add(PhoneChanged(v)),
-                              ),
-                              SizedBox(height: screenHeight * 0.02),
-                              TextInputField(
-                                title: AppConstants.companyName,
-                                hintText: AppConstants.companyPlaceholder,
-                                controller: state.companyController,
-                                onChanged: (v) => _bloc.eventSink.add(CompanyChanged(v)),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        // Save Button
-                        CustomButton(
-                          text: AppConstants.saveChange,
-                          onPressed: () => _bloc.eventSink.add(SaveProfileEvent()),
-                        ),
-                        SizedBox(height: screenHeight * 0.015),
-
-                        // Cancel Button
-                        CustomButton(
-                          text: AppConstants.cancelButtonTitle,
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        SizedBox(height: screenHeight * 0.03),
-                      ],
-                    );
-                  },
+                  ],
                 ),
-              ),
-            ),
-          ],
+
+                // Loading overlay
+                if (state.isLoading)
+                  Container(
+                    color: Colors.black.withOpacity(0.3),
+                    child: const Center(child: CircularProgressIndicator()),
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );

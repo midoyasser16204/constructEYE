@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../domain/entities/UserEntity.dart';
+
 /// --------------------- STATE ---------------------
 class EditProfileState {
   final TextEditingController nameController;
@@ -7,7 +9,15 @@ class EditProfileState {
   final TextEditingController emailController;
   final TextEditingController phoneController;
   final TextEditingController companyController;
+
   final String? imagePath;
+  final String? imageUrl;
+
+  final bool isLoading;
+  final bool isSuccess;
+  final String? errorMessage;
+
+  final UserEntity? userEntity;
 
   EditProfileState({
     required this.nameController,
@@ -16,6 +26,11 @@ class EditProfileState {
     required this.phoneController,
     required this.companyController,
     this.imagePath,
+    this.imageUrl,
+    this.userEntity,
+    this.errorMessage,
+    this.isSuccess = false,
+    this.isLoading = false,
   });
 
   EditProfileState copyWith({
@@ -25,6 +40,12 @@ class EditProfileState {
     TextEditingController? phoneController,
     TextEditingController? companyController,
     String? imagePath,
+    String? imageUrl,
+
+    bool? isLoading,
+    bool? isSuccess,
+    String? errorMessage,
+    UserEntity? userEntity,
   }) {
     return EditProfileState(
       nameController: nameController ?? this.nameController,
@@ -33,9 +54,15 @@ class EditProfileState {
       phoneController: phoneController ?? this.phoneController,
       companyController: companyController ?? this.companyController,
       imagePath: imagePath ?? this.imagePath,
+      imageUrl: imageUrl ?? this.imageUrl,
+      isLoading: isLoading ?? this.isLoading,
+      isSuccess: isSuccess ?? this.isSuccess,
+      errorMessage: errorMessage,
+      userEntity: userEntity ?? this.userEntity,
     );
   }
 }
+
 
 /// --------------------- EVENTS ---------------------
 abstract class EditProfileEvent {}

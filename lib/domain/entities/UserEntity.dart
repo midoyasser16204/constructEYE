@@ -4,8 +4,8 @@ class UserEntity {
   final String uid;
   final String email;
   final String fullName;
-  final Image? profilePictureUrl;
-  final int phone;
+  final String? profilePictureUrl;
+  final String phone;
   final String role;
   final String company;
 

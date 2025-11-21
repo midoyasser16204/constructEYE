@@ -35,6 +35,7 @@ class ProfileBloc {
           phone: user.phone.toString(),
           role: user.role,
           company: user.company,
+          imageUrl: user.profilePictureUrl,
         );
         _stateController.add(_currentState);
       }
@@ -50,7 +51,18 @@ class ProfileBloc {
     } else if (event is ToggleSafetyAlerts) {
       _currentState = _currentState.copyWith(safetyAlerts: event.value);
       _stateController.add(_currentState);
-    } else if (event is LogoutEvent) {
+    } else if (event is UpdateCurrentUser) {
+      _currentState = _currentState.copyWith(
+        name: event.updatedUser.fullName,
+        email: event.updatedUser.email,
+        phone: event.updatedUser.phone.toString(),
+        role: event.updatedUser.role,
+        company: event.updatedUser.company,
+        imageUrl: event.updatedUser.profilePictureUrl,
+      );
+      _stateController.add(_currentState);
+    }
+    else if (event is LogoutEvent) {
       debugPrint("LOGOUT PRESSED");
       await _logOutUseCase();
       // Emit state to signal UI
