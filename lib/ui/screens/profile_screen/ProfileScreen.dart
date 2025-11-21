@@ -138,13 +138,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {
-                                Navigator.push(
+                              onTap: () async {
+                                final updatedUser = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (_) => const EditProfileScreen(),
                                   ),
                                 );
+
+                                // Update profile with returned user data
+                                if (updatedUser != null) {
+                                  _bloc.eventSink.add(UpdateCurrentUser(updatedUser));
+                                }
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(

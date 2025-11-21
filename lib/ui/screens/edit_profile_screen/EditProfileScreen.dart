@@ -19,6 +19,8 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   final EditProfileBloc _bloc = getIt<EditProfileBloc>();
 
+  bool _hasNavigated = false;
+
   @override
   void dispose() {
     _bloc.dispose();
@@ -48,6 +50,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           initialData: _bloc.currentState,
           builder: (context, snapshot) {
             final state = snapshot.data!;
+
+            // Handle success state - navigate back with updated user
+            if (state.isSuccess && state.userEntity != null && !_hasNavigated) {
+              _hasNavigated = true;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.pop(context, state.userEntity);
+              });
+            }
+
+            // Handle error state
+            if (state.errorMessage != null && state.errorMessage!.isNotEmpty) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                _showSnackBar(state.errorMessage!, success: false);
+              });
+            }
+
             return Stack(
               children: [
                 Column(
