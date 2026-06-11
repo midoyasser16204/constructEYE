@@ -60,7 +60,7 @@ This project was developed collaboratively by:
 
 ## 📸 Screenshots
 
-### 🚀 Splash & Onboarding
+### 🚀 Splash
 
 <table>
   <tr>
@@ -68,16 +68,12 @@ This project was developed collaboratively by:
       <b>Splash Screen</b><br><br>
       <img src="images/splash.png" height="480" style="max-width:100%; object-fit:contain;" />
     </td>
-    <td align="center">
-      <b>Select Role</b><br><br>
-      <img src="images/select_role.png" height="480" style="max-width:100%; object-fit:contain;" />
-    </td>
   </tr>
 </table>
 
 ---
 
-### 🔐 Authentication
+### 🔐 Authentication  & Role Selection
 
 <table>
   <tr>
@@ -94,6 +90,10 @@ This project was developed collaboratively by:
     <td align="center">
       <b>Forget Password</b><br><br>
       <img src="images/forget_password.png" height="480" style="max-width:100%; object-fit:contain;" />
+    </td>
+    <td align="center">
+      <b>Select Role</b><br><br>
+      <img src="images/select_role.jpeg" height="480" style="max-width:100%; object-fit:contain;" />
     </td>
   </tr>
 </table>
@@ -144,7 +144,7 @@ This project was developed collaboratively by:
     </td>
     <td align="center">
       <b>PDF Viewer</b><br><br>
-      <img src="images/pdf_viewer.png" height="480" style="max-width:100%; object-fit:contain;" />
+      <img src="images/pdf_viewer.jpeg" height="480" style="max-width:100%; object-fit:contain;" />
     </td>
   </tr>
 </table>
@@ -174,7 +174,7 @@ This project was developed collaboratively by:
     </td>
     <td align="center">
       <b>Edit Profile</b><br><br>
-      <img src="images/edit_profile.png" height="480" style="max-width:100%; object-fit:contain;" />
+      <img src="images/edit_profile.jpeg" height="480" style="max-width:100%; object-fit:contain;" />
     </td>
   </tr>
 </table>
