@@ -463,6 +463,6 @@ lib/
 
 Thanks to all team members for their collaboration and effort in building this project.
 
-Special thanks to **[Mentor/Instructor Name]** for guidance and support.
+We would like to express our sincere gratitude to **Dr. Hussam Elbehiery** and **Dr. Mohamed Eassa** for their continuous guidance and supervision throughout this project. We also extend our appreciation to **Eng. Ahmed Ali** and **Eng. Zeinab Atef** for their support and assistance during the development process. Special thanks to **Eng. Ahmed Kamal**, our Civil Engineering Specialist, for providing the domain expertise and technical insights that greatly contributed to the success of this project.
 
 If you find this project useful, please consider giving it a **star ⭐**.
