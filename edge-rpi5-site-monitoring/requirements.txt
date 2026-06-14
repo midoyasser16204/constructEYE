@@ -1,0 +1,12 @@
+# Construct Eye — Python dependencies (Raspberry Pi 5 / Linux recommended)
+requests>=2.31.0
+firebase-admin>=6.5.0
+fpdf2>=2.7.0
+Pillow>=10.0.0
+opencv-python-headless>=4.8.0
+numpy>=1.24.0
+aiohttp>=3.9.0
+mediapipe>=0.10.0
+
+# Hailo platform SDK is installed separately on the Pi (not on PyPI):
+#   hailo_platform — bundled with HailoRT on Raspberry Pi + Hailo-8

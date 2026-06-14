@@ -1,8 +1,12 @@
 # 🏗️ ConstructEYE
 
-**ConstructEYE** is a Flutter mobile application developed as a **teamwork project**, designed to provide real-time construction site monitoring and management with AI-powered violation detection and comprehensive reporting capabilities.
+<p align="center">
+  <img src="images/construct_eye_logo.png" alt="Construct Eye logo" width="320"/>
+</p>
 
-The application follows **Clean Architecture**, a **feature-first structure**, and integrates Firebase services, real-time video streaming, PDF reporting, and push notifications to simulate a production-ready construction management system.
+**ConstructEYE** is a full-stack construction site monitoring platform developed as a **teamwork project**. It pairs a **Flutter mobile app** with an **edge-AI stack** on **Raspberry Pi 5 + Hailo-8** for real-time safety monitoring, progress reporting, and cloud sync via Firebase.
+
+The mobile app follows **Clean Architecture** and a **feature-first structure**, integrating Firebase services, live MJPEG streaming, PDF reporting, and push notifications. The edge module runs on-site for PPE/fall/idle detection and AI-driven construction progress analysis.
 
 ---
 
@@ -131,6 +135,21 @@ This project was developed collaboratively by:
     </td>
   </tr>
 </table>
+
+---
+
+### 🤖 Edge AI Hardware
+
+<table>
+  <tr>
+    <td align="center">
+      <b>Deployed Edge Device</b><br><br>
+      <img src="images/edge_device.png" height="480" style="max-width:100%; object-fit:contain;" />
+    </td>
+  </tr>
+</table>
+
+<p align="center"><em>Raspberry Pi 5 + Hailo-8 AI HAT with site camera — powers live MJPEG streaming, PPE detection, and progress reporting</em></p>
 
 ---
 
@@ -337,6 +356,19 @@ This project was developed collaboratively by:
 
 ---
 
+### 🤖 Edge AI (Raspberry Pi 5)
+
+* Python 3 — Safety monitoring & progress reporting on Pi 5 + Hailo-8
+* HailoRT / YOLOv8 — PPE detection (helmet, vest) on NPU
+* MediaPipe — Fall detection via pose estimation
+* Moondream Vision API — Structural/architectural progress analysis
+* MJPEG streaming — Live site dashboard consumed by the mobile app
+* OpenCV, fpdf2, firebase-admin — Capture, PDF generation, cloud sync
+
+See [`edge-rpi5-site-monitoring/README.md`](edge-rpi5-site-monitoring/README.md) for deployment instructions.
+
+---
+
 ## 🧱 Architecture Overview
 
 The project follows a **Feature-Based Clean Architecture** approach.
@@ -397,7 +429,55 @@ core/
 
 ---
 
-## 📂 Main Project Structure
+## 📂 Full Repository Structure
+
+ConstructEYE is a **monorepo** with two main parts: the Flutter client at the repo root and the Python edge stack under `edge-rpi5-site-monitoring/`.
+
+```
+construct-EYE/
+├── README.md                          # This file — project overview
+├── pubspec.yaml                       # Flutter app dependencies
+├── lib/                               # Flutter mobile app (Clean Architecture)
+├── android/ / ios/ / assets/ / images/  # Mobile platform & UI assets
+│
+└── edge-rpi5-site-monitoring/       # Raspberry Pi 5 + Hailo-8 edge AI stack
+    ├── README.md                      # Edge module quick start & deployment guide
+    ├── requirements.txt               # Python dependencies
+    ├── config.example.env             # Environment template (copy → .env)
+    │
+    ├── shared/                        # Shared Firebase helpers (both modules)
+    │   └── firebase_common.py         # Device registration, FCM, weather, notifications
+    │
+    ├── safety-monitoring/             # Real-time PPE, fall, idle detection + MJPEG stream
+    │   ├── site_safety_monitor/
+    │   │   └── site_safety_monitor.py # Main safety pipeline entry point
+    │   ├── models/                    # YOLOv8 PPE weights (HEF, PT, ONNX) + training artifacts
+    │   └── output/                    # Runtime violation snapshots & JSON logs
+    │
+    ├── progress-reporting/            # Moondream AI progress analysis + PDF reports
+    │   ├── src/
+    │   │   ├── construction_progress_report.py  # CLI report generator
+    │   │   └── progress_report_gui.py           # Tkinter live progress window
+    │   └── output/                  # Generated PDFs & reference metrics cache
+    │
+    ├── sample-site-images/            # Reference drawings + site photos for reports
+    └── assets/                        # Logo, branding, and hardware photos
+```
+
+| Path | Role |
+|------|------|
+| `lib/` | Flutter mobile app — authentication, live stream, violations, reports, notifications |
+| `edge-rpi5-site-monitoring/shared/` | Common Firebase/FCM code used by safety and progress modules |
+| `edge-rpi5-site-monitoring/safety-monitoring/` | On-site PPE, fall, and idle detection with MJPEG dashboard (port 8081) |
+| `edge-rpi5-site-monitoring/progress-reporting/` | AI construction progress reports synced to Firebase Storage/Firestore |
+| `edge-rpi5-site-monitoring/sample-site-images/` | Input images for progress report generation |
+| `edge-rpi5-site-monitoring/assets/` | Branding and device documentation images |
+
+For edge deployment, setup, and CLI usage, see [`edge-rpi5-site-monitoring/README.md`](edge-rpi5-site-monitoring/README.md).
+
+---
+
+## 📂 Flutter App Structure
 
 ```
 lib/

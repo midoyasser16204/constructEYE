@@ -1,0 +1,31 @@
+# Secrets and local runtime state
+.env
+*.json
+!**/metadata.yaml
+.device_id
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Generated outputs
+safety-monitoring/output/violation_images/*
+!safety-monitoring/output/violation_images/.gitkeep
+safety-monitoring/output/violation_logs/*
+!safety-monitoring/output/violation_logs/.gitkeep
+progress-reporting/output/
+reference_metrics_cache/
+
+# Large model weights (use Git LFS or host separately for GitHub)
+*.pt
+*.hef
+*.onnx
+*.tflite
+*.pb
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
